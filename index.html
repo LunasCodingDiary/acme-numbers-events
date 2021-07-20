@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+<HTML>
+<head>
+    <title>ACME NUMBERS</title>
+    <style>
+    *{
+    text-align: center;   
+    }
+
+    ul {
+    list-style: none;
+    }
+
+    button{
+        width:50px;
+        height:50px;
+        border:1px black solid
+    }
+    </style>
+</head>
+
+<body>
+<h1>Acme Numbers and Events</h1>
+<button></button>
+<p id='average'></p>
+<ul id='numList'></ul>
+</body>
+
+<script>
+    let total=0  
+    let count=0   
+    //function #1: add number
+    document.querySelector("button").addEventListener("click",function(){
+       const newNum=Math.ceil(Math.random() * 100)
+       total+=newNum
+       count+=1
+       const newNumItem=document.createElement('li')
+       newNumItem.innerHTML= +newNum
+       document.getElementById('numList').appendChild(newNumItem)
+       
+       //function #2: delete number （must be generated first, so this is nested)
+       newNumItem.addEventListener("click",function(){ 
+        const deletedNum=newNumItem.innerHTML
+        newNumItem.remove()  //or removeChild
+        total=total-deletedNum
+        count-=1
+
+        const avg=Math.ceil(total/count)
+        
+        if (total<=0) document.getElementById('average').innerHTML=null //edge Case
+        else document.getElementById('average').innerHTML=`The avarage of all the numbers is ${avg}.`
+        })
+       
+         //function #3: calculate average (inside event listener)
+       const avg=Math.ceil(total/count)
+       document.getElementById('average').innerHTML=`The avarage of all the numbers is ${avg}.`
+    })  
+    </script>
+</HTML>
